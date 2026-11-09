@@ -11,6 +11,7 @@ BRUTO = os.path.join(AQUI, 'bruto')
 SO = next((a[5:].split(',') for a in sys.argv if a.startswith('--so=')), [])
 quer = lambda parte: not SO or parte in SO
 SIMPLES = {'casos': 'casos', 'comandos': 'comandos', 'nota': 'nota-raca', 'kit': 'kit'}
+TELAS = 'hoje sessao plano diario xixi agora comandos senta raca kit familia'.split()
 EMPILHADOS = {'diario': 'diario', 'ficha': 'ficha'}
 total = 0
 
@@ -51,6 +52,11 @@ for raca in sorted(os.listdir(BRUTO)):
         if quer(parte): m[n] = list(salvar(Image.open(os.path.join(b, n + '.png')), os.path.join(oi, n + '.webp'), 756))
     for parte, n in EMPILHADOS.items():
         if quer(parte): m[n] = list(salvar(empilhar(os.path.join(b, n + '-1.png'), os.path.join(b, n + '-2.png')), os.path.join(oi, n + '.webp'), 756))
+    if quer('telas'):
+        # telas inteiras do trilho e do story do hero: 600 px de largura (celular de ~300 px CSS em 2x)
+        for t in TELAS:
+            m['tela-' + t] = list(salvar(Image.open(os.path.join(b, 'tela-' + t + '.png')), os.path.join(oi, 'tela-' + t + '.webp'), 600, 74))
+        m['realces'] = json.load(open(os.path.join(b, 'realces.json')))
     if quer('hero'):
         # celular do hero em três larguras (srcset), para cada densidade de tela baixar só o que usa (LCP)
         for px in (720, 880):

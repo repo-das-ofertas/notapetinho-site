@@ -45,6 +45,55 @@ section.claro{background:var(--creme)}
 .pilha{display:grid;gap:18px;width:100%;max-width:390px}
 .tela-video{width:min(300px,78vw);border-radius:30px;overflow:hidden;border:6px solid #fff;box-shadow:0 22px 46px -24px rgba(90,50,20,.55);background:var(--pessego)}
 .tela-video video{width:100%;aspect-ratio:540/1168;object-fit:cover}
+/* trilho "Por dentro do app": as telas inteiras num celular realista, uma por vez (no estilo da Lucro na Mão) */
+.telas-p{color:var(--suave);margin-top:-6px !important}
+.trilho{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 18px;padding:18px 18px 16px;margin:10px -18px 0;scrollbar-width:none;cursor:grab}
+.trilho::-webkit-scrollbar{display:none}
+.trilho.arrastando{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.trilho.arrastando *{pointer-events:none}
+.trilho:focus-visible{outline:3px solid var(--terracota);outline-offset:-3px;border-radius:12px}
+.slide{flex:0 0 74%;max-width:290px;scroll-snap-align:start;margin:0}
+.slide figcaption{padding:14px 4px 0;font-size:15px;line-height:1.45;color:var(--suave)}
+.slide figcaption b{display:block;font-size:17px;font-weight:900;color:var(--tinta)}
+.cel{container-type:inline-size;position:relative;border-radius:15%/7.4%;padding:3.4%;
+ background:linear-gradient(135deg,#7c838a,#eef1f3 18%,#8e959b 42%,#d9dde0 68%,#6f767c);
+ box-shadow:0 26px 44px -24px rgba(120,60,20,.6),inset 0 0 0 1px rgba(255,255,255,.3)}
+.cel::before,.cel::after{content:"";position:absolute;width:1.6%;border-radius:2px;background:linear-gradient(90deg,#6f767c,#c9ced2)}
+.cel::before{left:-1.2%;top:19%;height:9%}.cel::after{right:-1.2%;top:24%;height:14%}
+.cel .vetro{position:relative;border-radius:12%/5.8%;overflow:hidden;background:#000;padding:2.4% 2.4% 0}
+.cel .vetro::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.16),rgba(255,255,255,0) 38%);pointer-events:none}
+.cel .isola{position:absolute;top:2.6cqw;left:50%;transform:translateX(-50%);width:30%;height:8cqw;border-radius:99px;background:#000;z-index:2}
+.cel .stato{display:flex;justify-content:space-between;align-items:center;padding:3cqw 7cqw 2.4cqw;font:800 5cqw/1 Nunito,system-ui,sans-serif;color:var(--tinta);background:#FEE6D3;border-radius:10cqw 10cqw 0 0}
+.cel .stato i{display:flex;gap:1.4cqw;align-items:center}
+.cel .stato svg{height:4.2cqw;width:auto}
+.cel .schermo{display:block;width:100%;height:auto;border-radius:0 0 10cqw 10cqw}
+.pontos{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:7px;margin-top:6px}
+.pontos i{width:7px;height:7px;border-radius:50%;background:#EFD2BD;cursor:pointer;transition:.2s}
+.pontos i.on{width:20px;border-radius:4px;background:var(--terracota)}
+.pontos button{width:44px;height:44px;flex:0 0 44px;margin:0 8px;padding:0;border-radius:50%;border:1px solid var(--linha);background:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px -6px rgba(90,50,20,.35)}
+.pontos button svg{width:18px;height:18px;fill:none;stroke:var(--terracota2);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pontos button:disabled{opacity:.35;cursor:default;box-shadow:none}
+@media (min-width:861px){.trilho{margin:10px 0 0;padding:18px 4px 16px;scroll-padding:0 4px}.slide{flex:0 0 calc((100% - 48px)/4);max-width:none}}
+@media (prefers-reduced-motion:reduce){.pontos i{transition:none}}
+/* o celular do hero em partes, estilo Stories (como o da Lucro na Mão). 2,17 = altura do celular / largura (aro, barra e tela 390x844) */
+.story{width:min(330px,84vw);margin:0 auto}
+@media (min-width:861px){.story{width:min(330px,calc((100svh - 210px) / 2.17))}}
+.story .cel{box-shadow:0 30px 50px -24px rgba(120,60,20,.6),inset 0 0 0 1px rgba(255,255,255,.3)}
+.st-tela{position:relative;aspect-ratio:390/844;overflow:hidden;border-radius:0 0 10cqw 10cqw;background:var(--pessego);cursor:pointer;touch-action:pan-y;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.st-tela:focus-visible{outline:3px solid var(--terracota);outline-offset:-5px}
+.st-parte{position:absolute;inset:0;opacity:0;transform:translateX(7%);pointer-events:none;transition:opacity .5s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.st-parte.on{opacity:1;transform:none}
+.st-parte.foi{transform:translateX(-7%)}
+.st-zoom{position:absolute;inset:0}
+.st-midia{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:top;background:var(--pessego)}
+.st-realce{position:absolute;border-radius:3.4cqw;opacity:0;transform:scale(.96);box-shadow:0 0 0 .8cqw var(--terracota),0 0 0 2.8cqw rgba(224,113,63,.18);transition:opacity .45s ease .55s,transform .45s ease .55s}
+.st-parte.on .st-realce{opacity:1;transform:none}
+.st-barras{position:absolute;top:1.8cqw;left:2.8cqw;right:2.8cqw;display:flex;gap:1.2cqw;z-index:3;pointer-events:none}
+.st-barras i{flex:1;height:.9cqw;min-height:2.5px;border-radius:9px;background:rgba(58,42,31,.18);overflow:hidden}
+.st-barras b{display:block;height:100%;width:0;background:var(--terracota)}
+.st-rot{position:absolute;left:50%;bottom:3cqw;transform:translateX(-50%);z-index:3;white-space:nowrap;font:900 4.8cqw/1.2 Nunito,system-ui,sans-serif;color:#fff;background:rgba(58,42,31,.9);padding:2.4cqw 4.6cqw;border-radius:99px;box-shadow:0 6px 18px -8px rgba(0,0,0,.6);pointer-events:none}
+.story.parado .st-barras{display:none}
+@media (prefers-reduced-motion:reduce){.st-parte,.st-realce{transition:none}}
 /* listas */
 .lista-ok{list-style:none;padding:0}
 .lista-ok li{position:relative;padding:9px 0 9px 34px}

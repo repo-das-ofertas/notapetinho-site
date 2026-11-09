@@ -35,7 +35,83 @@
   "video-agora-capa": [
    540,
    1168
-  ]
+  ],
+  "tela-hoje": [
+   600,
+   1298
+  ],
+  "tela-sessao": [
+   600,
+   1298
+  ],
+  "tela-plano": [
+   600,
+   1298
+  ],
+  "tela-diario": [
+   600,
+   1298
+  ],
+  "tela-xixi": [
+   600,
+   1298
+  ],
+  "tela-agora": [
+   600,
+   1298
+  ],
+  "tela-comandos": [
+   600,
+   1298
+  ],
+  "tela-senta": [
+   600,
+   1298
+  ],
+  "tela-raca": [
+   600,
+   1298
+  ],
+  "tela-kit": [
+   600,
+   1298
+  ],
+  "tela-familia": [
+   600,
+   1298
+  ],
+  "realces": {
+   "plano": {
+    "left": 3.6,
+    "top": 66.6,
+    "width": 92.8,
+    "height": 8.9
+   },
+   "diario": {
+    "left": 3.6,
+    "top": 53.8,
+    "width": 92.8,
+    "height": 37.2
+   },
+   "xixi": {
+    "left": 3.6,
+    "top": 15.9,
+    "width": 92.8,
+    "height": 61.9
+   },
+   "senta": {
+    "left": 3.6,
+    "top": 56.9,
+    "width": 92.8,
+    "height": 34.1
+   },
+   "kit": {
+    "left": 3.6,
+    "top": 32.1,
+    "width": 92.8,
+    "height": 58.9
+   }
+  }
  },
  "salsicha": {
   "casos": [
@@ -73,7 +149,83 @@
   "video-agora-capa": [
    540,
    1168
-  ]
+  ],
+  "tela-hoje": [
+   600,
+   1298
+  ],
+  "tela-sessao": [
+   600,
+   1298
+  ],
+  "tela-plano": [
+   600,
+   1298
+  ],
+  "tela-diario": [
+   600,
+   1298
+  ],
+  "tela-xixi": [
+   600,
+   1298
+  ],
+  "tela-agora": [
+   600,
+   1298
+  ],
+  "tela-comandos": [
+   600,
+   1298
+  ],
+  "tela-senta": [
+   600,
+   1298
+  ],
+  "tela-raca": [
+   600,
+   1298
+  ],
+  "tela-kit": [
+   600,
+   1298
+  ],
+  "tela-familia": [
+   600,
+   1298
+  ],
+  "realces": {
+   "plano": {
+    "left": 3.6,
+    "top": 66.6,
+    "width": 92.8,
+    "height": 8.9
+   },
+   "diario": {
+    "left": 3.6,
+    "top": 53.8,
+    "width": 92.8,
+    "height": 37.2
+   },
+   "xixi": {
+    "left": 3.6,
+    "top": 15.9,
+    "width": 92.8,
+    "height": 61.9
+   },
+   "senta": {
+    "left": 3.6,
+    "top": 56.9,
+    "width": 92.8,
+    "height": 34.1
+   },
+   "kit": {
+    "left": 3.6,
+    "top": 32.1,
+    "width": 92.8,
+    "height": 58.9
+   }
+  }
  },
  "shih-tzu": {
   "casos": [
@@ -111,7 +263,83 @@
   "video-agora-capa": [
    540,
    1168
-  ]
+  ],
+  "tela-hoje": [
+   600,
+   1298
+  ],
+  "tela-sessao": [
+   600,
+   1298
+  ],
+  "tela-plano": [
+   600,
+   1298
+  ],
+  "tela-diario": [
+   600,
+   1298
+  ],
+  "tela-xixi": [
+   600,
+   1298
+  ],
+  "tela-agora": [
+   600,
+   1298
+  ],
+  "tela-comandos": [
+   600,
+   1298
+  ],
+  "tela-senta": [
+   600,
+   1298
+  ],
+  "tela-raca": [
+   600,
+   1298
+  ],
+  "tela-kit": [
+   600,
+   1298
+  ],
+  "tela-familia": [
+   600,
+   1298
+  ],
+  "realces": {
+   "plano": {
+    "left": 3.6,
+    "top": 66.6,
+    "width": 92.8,
+    "height": 8.9
+   },
+   "diario": {
+    "left": 3.6,
+    "top": 53.8,
+    "width": 92.8,
+    "height": 37.2
+   },
+   "xixi": {
+    "left": 3.6,
+    "top": 15.9,
+    "width": 92.8,
+    "height": 61.9
+   },
+   "senta": {
+    "left": 3.6,
+    "top": 56.9,
+    "width": 92.8,
+    "height": 34.1
+   },
+   "kit": {
+    "left": 3.6,
+    "top": 32.1,
+    "width": 92.8,
+    "height": 58.9
+   }
+  }
  },
  "yorkshire": {
   "casos": [
@@ -149,6 +377,82 @@
   "video-agora-capa": [
    540,
    1168
-  ]
+  ],
+  "tela-hoje": [
+   600,
+   1298
+  ],
+  "tela-sessao": [
+   600,
+   1298
+  ],
+  "tela-plano": [
+   600,
+   1298
+  ],
+  "tela-diario": [
+   600,
+   1298
+  ],
+  "tela-xixi": [
+   600,
+   1298
+  ],
+  "tela-agora": [
+   600,
+   1298
+  ],
+  "tela-comandos": [
+   600,
+   1298
+  ],
+  "tela-senta": [
+   600,
+   1298
+  ],
+  "tela-raca": [
+   600,
+   1298
+  ],
+  "tela-kit": [
+   600,
+   1298
+  ],
+  "tela-familia": [
+   600,
+   1298
+  ],
+  "realces": {
+   "plano": {
+    "left": 3.6,
+    "top": 66.6,
+    "width": 92.8,
+    "height": 8.9
+   },
+   "diario": {
+    "left": 3.6,
+    "top": 53.8,
+    "width": 92.8,
+    "height": 37.2
+   },
+   "xixi": {
+    "left": 3.6,
+    "top": 15.9,
+    "width": 92.8,
+    "height": 61.9
+   },
+   "senta": {
+    "left": 3.6,
+    "top": 56.9,
+    "width": 92.8,
+    "height": 34.1
+   },
+   "kit": {
+    "left": 3.6,
+    "top": 32.1,
+    "width": 92.8,
+    "height": 58.9
+   }
+  }
  }
 }

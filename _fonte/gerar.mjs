@@ -16,8 +16,8 @@ const CHECKOUT = { lulu: 'https://pay.cakto.com.br/4335byt', 'shih-tzu': 'https:
 // (instalacao.script do diagnostico-rastreio). Vazio = nada carrega.
 const RASTREIO = { pixel: '4621816201469916', painel: '7c65ca17fb0c624457cb6c87d1063a69' };
 
-// largura do celular do hero: quase a tela toda no celular (margem de 18 px de cada lado), 330 px no computador (o botão cabe na primeira tela)
-const SIZES_HERO = '(max-width: 860px) calc(100vw - 36px), 330px';
+// ícones da barra de status do celular do trilho (sinal e bateria)
+const STATUS_IC = '<svg viewBox="0 0 18 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/></svg>';
 const ok = (c, m) => { if (!c) { console.error('ERRO:', m); process.exit(1); } };
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const md = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -35,6 +35,22 @@ function pagina(id) {
   const shot = (n, alt, cls = '') => `<figure class="shot ${cls}">${img(n, alt)}</figure>`;
   const fig = (n, alt, legenda, cls = '') => `<figure class="legendada ${cls}"><div class="shot">${img(n, alt)}</div><figcaption>${t(legenda)}</figcaption></figure>`;
   const video = (n, alt, legenda) => `<figure class="legendada"><div class="tela-video"><video muted loop playsinline preload="none" width="540" height="1168" poster="../img/${id}/video-${n}-capa.webp" data-src="../video/${id}/${n}.mp4" aria-label="${esc(tk(alt))}"></video></div>${legenda ? `<figcaption>${t(legenda)}</figcaption>` : ''}</figure>`;
+  // o story do hero: barras de progresso, cada parte um vídeo mudo do app ou uma tela inteira com o realce; toque avança, segurar pausa
+  const story = () => {
+    const R = m.realces || {};
+    const partes = T.story.map(([tipo, n, rot, desc], k) => {
+      const midia = tipo === 'video'
+        ? `<video class="st-midia" data-src="../video/${id}/${n}.mp4" poster="../img/${id}/video-${n}-capa.webp" width="540" height="1168" muted playsinline preload="none" disablepictureinpicture aria-label="${esc(tk(desc))}"></video>`
+        : `<img class="st-midia" data-src="../img/${id}/tela-${n}.webp" width="${m['tela-' + n][0]}" height="${m['tela-' + n][1]}" decoding="async" alt="${esc(tk(desc))}">`
+          + (R[n] ? `<span class="st-realce" aria-hidden="true" style="left:${R[n].left}%;top:${R[n].top}%;width:${R[n].width}%;height:${R[n].height}%"></span>` : '');
+      return `<div class="st-parte${k ? '' : ' on'}"${tipo === 'img' ? ' data-dur="3200"' : ''}><div class="st-zoom">${midia}</div><span class="st-rot">${t(rot)}</span></div>`;
+    }).join('\n   ');
+    return `<div class="story" data-story role="region" aria-roledescription="carrossel" aria-label="${esc(tk('O app do {R} por dentro, em ' + T.story.length + ' partes'))}"><div class="cel"><div class="vetro"><span class="isola"></span><div class="stato"><span>9:41</span><i>${STATUS_IC}</i></div>
+  <div class="st-tela" tabindex="0" role="button" aria-label="Toque para avançar, segure para pausar">
+   <div class="st-barras" aria-hidden="true">${T.story.map(() => '<i><b></b></i>').join('')}</div>
+   ${partes}
+  </div></div></div></div>`;
+  };
   const ck = CHECKOUT[id] || '#checkout-pendente';
   const botao = micro => `<div class="cta"><a class="btn" href="${esc(ck)}" data-checkout="${id}">${t(T.botao)}</a><p class="micro">${t(micro)}</p></div>`;
   // seção em três partes: texto, mídia, fecho do texto. No celular nessa ordem; no computador, texto e fecho de um lado e mídia do outro
@@ -52,7 +68,7 @@ function pagina(id) {
 <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-180.png">
-<link rel="preload" as="image" imagesrcset="../img/${id}/hero-celular-720.webp 720w, ../img/${id}/hero-celular-880.webp 880w, ../img/${id}/hero-celular-1080.webp 1080w" imagesizes="${SIZES_HERO}" fetchpriority="high">
+<link rel="preload" as="image" href="../img/${id}/video-dia-capa.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 ${rastreio}
@@ -67,18 +83,26 @@ ${rastreio}
   <h1>${t(T.hero.h1)}</h1>
   <p class="sub">${t(T.hero.sub)}</p>
  </div>
- <div class="midia"><img class="celular" src="../img/${id}/hero-celular-1080.webp" srcset="../img/${id}/hero-celular-720.webp 720w, ../img/${id}/hero-celular-880.webp 880w, ../img/${id}/hero-celular-1080.webp 1080w" sizes="${SIZES_HERO}" width="${m['hero-celular'][0]}" height="${m['hero-celular'][1]}" alt="${esc(tk('Tela Hoje do app: {C} no Tapetinho, dia 5 de 21'))}" fetchpriority="high" decoding="async"></div>
+ <div class="midia">${story()}</div>
  ${botao(T.hero.micro)}
 </div></section>
 
 ${sec('s-dor', `<h2>${t(r.dor)}</h2><p>${t(T.dor.p)}</p>`,
   fig('casos', 'Tela Agora, xixi: os casos rasga o tapetinho, faz do lado, erra de dia e acerta à noite', T.dor.legenda))}
 
-${sec3('s-dia claro', `<h2>${t(T.dia.h2)}</h2>${T.dia.itens.map(i => `<p>${t(i)}</p>`).join('')}`,
+<section class="s-telas claro"><div class="wrap">
+ <h2 class="centro">${t(T.telas.h2)}</h2><p class="centro telas-p">${t(T.telas.p)}</p>
+ <div class="trilho" data-trilho tabindex="0" role="region" aria-label="${esc(tk('Telas do app do {R}'))}">
+ ${T.telas.itens.map(([n, tit, linha]) => `<figure class="slide"><div class="cel"><div class="vetro"><span class="isola"></span><div class="stato"><span>9:41</span><i>${STATUS_IC}</i></div><img class="schermo" src="../img/${id}/tela-${n}.webp" width="${m['tela-' + n][0]}" height="${m['tela-' + n][1]}" loading="lazy" decoding="async" alt="${esc(tk('Tela do app: ' + tit))}"></div></div><figcaption><b>${t(tit)}</b>${t(linha)}</figcaption></figure>`).join('\n ')}
+ </div>
+ <div class="pontos" data-pontos></div>
+</div></section>
+
+${sec3('s-dia', `<h2>${t(T.dia.h2)}</h2>${T.dia.itens.map(i => `<p>${t(i)}</p>`).join('')}`,
   video('dia', 'Gravação do app: o dia 5 começa, o relógio conta 3 minutos, Feito, e o dia 6 aparece para amanhã', T.dia.legenda),
   `<p class="plano-linha">${t(T.dia.plano)}</p>`, true)}
 
-${sec3('s-xixi', `<h2>${t(T.xixi.h2)}</h2>${T.xixi.itens.map(i => `<p>${t(i)}</p>`).join('')}`,
+${sec3('s-xixi claro', `<h2>${t(T.xixi.h2)}</h2>${T.xixi.itens.map(i => `<p>${t(i)}</p>`).join('')}`,
   `<div class="pilha">${shot('diario', 'Diário do xixi: os dois botões e o gráfico por horário dos últimos 7 dias')}<p class="menor">${t(T.xixi.menor)}</p></div>`,
   botao(T.xixi.micro))}
 
@@ -130,6 +154,52 @@ var alvos=[document.querySelector('.hero')].concat([].slice.call(document.queryS
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)vis.add(e.target);else vis.delete(e.target);});var on=vis.size===0;
 bar.classList.toggle('on',on);bar.inert=!on;bar.setAttribute('aria-hidden',String(!on));bar.querySelector('a').tabIndex=on?0:-1;});
 alvos.forEach(function(a){if(a)io.observe(a);});})();
+/* o celular do hero em partes, estilo Stories (o mesmo da Lucro na Mão). Cada print dura 3,2 s; o vídeo dura o vídeo.
+   Toque avança, segurar pausa, setas do teclado; loop; para fora da tela ou com a aba escondida; cada parte carrega a seguinte.
+   Com "reduzir movimento": parado na primeira tela, sem vídeo */
+(function(){var reduz=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('[data-story]').forEach(function(st){
+var partes=[].slice.call(st.querySelectorAll('.st-parte')),barras=[].slice.call(st.querySelectorAll('.st-barras b')),tela=st.querySelector('.st-tela');
+var n=partes.length,atual=0,gasto=0,ultimo=0,segurando=false,fora=false,escondida=false;
+function carregar(p){if(!p)return;var md=p.querySelector('[data-src]');if(md&&!md.getAttribute('src')){md.src=md.dataset.src;if(md.tagName==='VIDEO')md.preload='auto';}}
+if(reduz){st.classList.add('parado');var im=partes[1];partes.forEach(function(p,k){p.classList.toggle('on',k===1);});carregar(im);return;}
+function video(i){return partes[i].querySelector('video');}
+function tocar(v){var pr=v.play();if(pr&&pr.catch)pr.catch(function(){v.dataset.falhou='1';});}
+function mostrar(i){var antes=atual;partes.forEach(function(p,k){p.classList.toggle('on',k===i);p.classList.toggle('foi',k===antes&&k!==i);var v=video(k);if(v&&k!==i)v.pause();});
+barras.forEach(function(b,k){b.style.width=k<i?'100%':'0%';});atual=i;gasto=0;carregar(partes[i]);carregar(partes[(i+1)%n]);
+var v=video(i);if(v&&!v.dataset.falhou){try{v.currentTime=0;}catch(e){}if(!fora&&!escondida)tocar(v);}}
+function proximo(){mostrar((atual+1)%n);}function anterior(){mostrar((atual-1+n)%n);}
+function parado(){return segurando||fora||escondida;}
+function quadro(tm){requestAnimationFrame(quadro);var dt=ultimo?Math.min(tm-ultimo,100):0;ultimo=tm;if(parado())return;var v=video(atual),fr;
+if(v&&!v.dataset.falhou){if(v.readyState<2||!v.duration){gasto+=dt;if(gasto>3000)v.dataset.falhou='1';return;}if(v.paused&&!v.ended)tocar(v);fr=v.currentTime/v.duration;if(v.ended||fr>=0.995){proximo();return;}}
+else{gasto+=dt;fr=gasto/(+partes[atual].dataset.dur||3200);if(fr>=1){proximo();return;}}
+barras[atual].style.width=(Math.min(fr,1)*100)+'%';}
+function pausar(sim){var v=video(atual);if(v&&!v.dataset.falhou){if(sim)v.pause();else if(!parado())tocar(v);}}
+var timer=0,apertou=false;
+tela.addEventListener('pointerdown',function(e){if(e.button>0)return;apertou=true;timer=setTimeout(function(){segurando=true;pausar(true);},200);});
+function soltar(av){clearTimeout(timer);if(!apertou)return;apertou=false;if(segurando){segurando=false;pausar(false);}else if(av)proximo();}
+tela.addEventListener('pointerup',function(){soltar(true);});tela.addEventListener('pointercancel',function(){soltar(false);});tela.addEventListener('pointerleave',function(){soltar(false);});
+tela.addEventListener('contextmenu',function(e){e.preventDefault();});
+tela.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='Enter'||e.key===' '){e.preventDefault();proximo();}else if(e.key==='ArrowLeft'){e.preventDefault();anterior();}});
+if('IntersectionObserver' in window)new IntersectionObserver(function(es){fora=!es[0].isIntersecting;pausar(fora);},{threshold:0.2}).observe(st);
+document.addEventListener('visibilitychange',function(){escondida=document.hidden;pausar(escondida);});
+mostrar(0);requestAnimationFrame(quadro);});})();
+/* trilho das telas: pontos que acompanham, setas, pontos clicáveis e arraste com o mouse (o dedo desliza nativo) */
+(function(){document.querySelectorAll('[data-trilho]').forEach(function(t){var pts=t.nextElementSibling,cs=t.children;if(!pts||!pts.hasAttribute('data-pontos'))return;
+for(var i=0;i<cs.length;i++)pts.appendChild(document.createElement('i'));
+function idx(){var passo=cs.length>1?cs[1].offsetLeft-cs[0].offsetLeft:1;return t.scrollLeft+t.clientWidth>=t.scrollWidth-4?cs.length-1:Math.round(t.scrollLeft/passo);}
+function ir(k){k=Math.max(0,Math.min(cs.length-1,k));t.scrollTo({left:cs[k].offsetLeft-cs[0].offsetLeft,behavior:'smooth'});}
+function seta(c,r,d){var b=document.createElement('button');b.type='button';b.className=c;b.setAttribute('aria-label',r);b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+d+'"/></svg>';return b;}
+var ant=seta('ant','Tela anterior','M15 6l-6 6 6 6'),prox=seta('prox','Próxima tela','M9 6l6 6-6 6');pts.insertBefore(ant,pts.firstChild);pts.appendChild(prox);
+function marca(){var n=idx();[].forEach.call(pts.querySelectorAll('i'),function(p,k){p.classList.toggle('on',k===n);});ant.disabled=t.scrollLeft<=4;prox.disabled=t.scrollLeft+t.clientWidth>=t.scrollWidth-4;}
+ant.addEventListener('click',function(){ir(idx()-1);});prox.addEventListener('click',function(){ir(idx()+1);});
+[].forEach.call(pts.querySelectorAll('i'),function(p,k){p.addEventListener('click',function(){ir(k);});});
+t.addEventListener('scroll',function(){requestAnimationFrame(marca);},{passive:true});window.addEventListener('resize',marca);marca();
+var x0=0,s0=0,mv=false,arr=false;
+t.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'||e.button!==0)return;x0=e.clientX;s0=t.scrollLeft;mv=true;arr=false;});
+window.addEventListener('pointermove',function(e){if(!mv)return;var dx=e.clientX-x0;if(!arr&&Math.abs(dx)>6){arr=true;t.classList.add('arrastando');}if(arr)t.scrollLeft=s0-dx;});
+window.addEventListener('pointerup',function(){if(!mv)return;mv=false;if(arr){t.classList.remove('arrastando');var passo=cs.length>1?cs[1].offsetLeft-cs[0].offsetLeft:1;ir(Math.round(t.scrollLeft/passo));}});
+});})();
 /* gravações do app: carregam e tocam só quando aparecem na tela (mudas, em loop) */
 (function(){var vs=document.querySelectorAll('video[data-src]');if(!('IntersectionObserver' in window)){vs.forEach(function(v){v.src=v.dataset.src;});return;}
 var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){if(!v.src){v.src=v.dataset.src;}v.play().catch(function(){});}else if(v.src){v.pause();}});},{rootMargin:'200px 0px'});

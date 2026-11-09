@@ -56,14 +56,45 @@ export const racas = {
 export const texto = {
   marca: 'No Tapetinho',
   hero: {
-    h1: 'Se o seu {R} faz xixi pela casa, o app mostra o que fazer hoje, em 3 minutos.',
-    sub: 'Um app de adestramento só do {R}. Você põe o nome e a foto dele, e todo dia abre o treino curto, a tarefa da casa e o diário do xixi. Sem gritar e sem castigo.',
+    // headline nova (2026-11-09, Vini: a promessa só de xixi era fraca): obediência em casa contra o adestrador pago; o xixi entra no sub
+    h1: 'Ensine seu {R} a te obedecer em casa, sem pagar adestrador.',
+    sub: 'Senta, fica, vem e xixi no tapetinho: 3 minutos por dia, com o passo a passo no celular.',
     micro: 'R$ 37 uma vez só · Pix ou cartão · no seu celular'
   },
   botao: 'Quero o No Tapetinho',
   dor: {
     p: 'Faz do lado, rasga o tapetinho, acerta de noite e erra de dia.',
     legenda: 'Cada caso tem o que fazer no app.'
+  },
+  // trilho "Por dentro do app" (2026-11-09): as telas inteiras, uma por vez, no celular (estilo da Lucro na Mão).
+  // [tela, título, linha]; a ordem é o caminho de quem usa: hoje, o treino, o plano, o xixi, o Agora, os comandos, a raça, os bônus
+  // o celular do hero em partes, estilo Stories, como o da Lucro na Mão (2026-11-09, Vini): [tipo, tela, legenda, descrição].
+  // Vídeo: gravação muda do app (video/<raça>/); print: tela inteira com o realce medido no midia.mjs. Legenda curta: cabe numa linha
+  story: [
+    ['video', 'dia', 'O treino de hoje, 3 min', 'Gravação do app: o dia 5 começa, o relógio conta 3 minutos, os passos aparecem e Feito'],
+    ['img', 'diario', 'O xixi anotado em 2 toques', 'Diário do xixi: os botões No tapetinho e Fora do lugar e o gráfico por horário dos últimos 7 dias'],
+    ['img', 'xixi', 'Xixi fora? O que fazer', 'Tela Xixi e cocô fora do lugar: o que fazer agora, em passos numerados'],
+    ['img', 'comandos', '7 comandos com o {R}', 'Tela Comandos: os cartões desenhados com um {R}, com os já aprendidos marcados'],
+    ['img', 'senta', 'Passo a passo de cada um', 'Comando Senta: a ilustração e o passo a passo'],
+    ['video', 'agora', 'Latiu? Um toque e pronto', 'Gravação do app: tela Agora, toque em Late demais e o que fazer aparece'],
+    ['img', 'kit', 'Bônus: kit para imprimir', 'Kit para imprimir: o calendário dos 21 dias com o nome e a foto do cão']
+  ],
+  telas: {
+    h2: 'Por dentro do app do {R}',
+    p: 'Arraste para o lado e veja cada tela, do jeito que fica no seu celular.',
+    itens: [
+      ['hoje', 'O treino de hoje', 'Abre no dia certo, com o nome e a foto do seu cachorro.'],
+      ['sessao', '3 minutos, com o relógio na tela', 'Passos curtos. Terminou, toque em Feito.'],
+      ['plano', 'O plano de 21 dias', 'Um passo por dia, cada um com uma tarefa da casa.'],
+      ['diario', 'O diário do xixi', 'Dois toques: acertou ou errou. Mostra o horário em que ele mais erra.'],
+      ['xixi', 'Xixi fora do lugar', 'O que fazer na hora e o que treinar, caso a caso.'],
+      ['agora', 'Aconteceu agora?', 'Latido, choro sozinho, guia, mordida, visitas: um toque.'],
+      ['comandos', 'Os 7 comandos', 'Desenhados com um {R}. Marque os que ele já faz.'],
+      ['senta', 'Cada comando, passo a passo', 'Do senta ao vem, escrito para quem nunca adestrou.'],
+      ['raca', 'Meu {R}', 'O que muda no treino por causa do corpo e do jeito da raça.'],
+      ['kit', 'Bônus: o kit para imprimir', 'O calendário dos 21 dias e os cartões, com o nome dele.'],
+      ['familia', 'O combinado da família', 'As mesmas palavras para todo mundo da casa, para mandar no grupo.']
+    ]
   },
   dia: {
     h2: 'Ele não faz xixi fora por pirraça',
@@ -136,12 +167,12 @@ export const texto = {
   rodape: { marca: 'No Tapetinho', email: 'contato@notapetinho.com' }
 };
 
-// a raiz notapetinho.com, destino da bio do Instagram e do Facebook: texto literal do marca.md (2026-11-03), sem foco em raça e sem preço
+// a raiz notapetinho.com, destino da bio do Instagram e do Facebook: texto literal do marca.md (2026-11-03; h1 trocado em 2026-11-09), sem foco em raça e sem preço
 export const raiz = {
   titulo: 'No Tapetinho: adestramento em casa, pelo celular',
   descricao: 'App de adestramento para fazer em casa, feito para a raça do seu cachorro: treino de 3 minutos por dia, plano de 21 dias, sem gritar e sem castigo.',
   chapeu: 'Adestramento em casa, pelo celular',
-  h1: 'Seu cachorro faz xixi pela casa? O app mostra o que fazer hoje, em 3 minutos.',
+  h1: 'Ensine seu cachorro a te obedecer em casa, sem pagar adestrador.',
   sub: 'Um app de adestramento feito para a raça do seu cachorro. Você abre, faz o treino do dia e marca feito. Sem gritar e sem castigo.',
   // ícones da própria interface do app, na ordem do marca.md: relógio, calendário, gota
   linhas: [['relogio', '**3 minutos por dia**, com o relógio na tela'], ['plano', '**Plano de 21 dias**, com o xixi treinado desde o dia 1'], ['gota', '**Paga uma vez**, sem mensalidade']],

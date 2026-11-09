@@ -20,7 +20,7 @@ const RACAS = {
   salsicha: { pasta: 'salsicha-b8r3wd', nome: 'Bidu', sexo: 'm', nota7: { tela: 'raca', item: 1 }, foto: 'foto-salsicha-avatar.jpg' },
   yorkshire: { pasta: 'yorkshire-h5t6nc', nome: 'Nina', sexo: 'f', nota7: { tela: 'senta' }, foto: 'foto-yorkshire-avatar.jpg' }
 };
-// --so=hero,diario,ficha,... refaz só essas capturas, sem apagar as outras (partes: hero diario comandos nota casos kit ficha videos)
+// --so=hero,diario,ficha,... refaz só essas capturas, sem apagar as outras (partes: hero diario comandos nota casos kit ficha telas videos)
 const SO = (process.argv.find(a => a.startsWith('--so=')) || '').slice(5).split(',').filter(Boolean);
 const quer = parte => !SO.length || SO.includes(parte);
 const args = process.argv.slice(2).filter(a => !a.startsWith('--'));
@@ -134,6 +134,42 @@ for (const r of escolha) {
     await p.evaluate(() => document.querySelector('.cal').closest('.cartao').setAttribute('data-rec', '1'));
     await recorte(p, f('kit.png'), '[data-rec]');
   }
+  await ctx.close();
+  }
+
+  if (quer('telas')) {
+  // ---- as telas inteiras para o trilho "Por dentro do app" (celulares no estilo da Lucro na Mão): a primeira tela de cada
+  // parte, com a barra de baixo, em 390x844 (a mesma tela das gravações, para o story do hero misturar vídeo e print) e 2x.
+  // A barra de status vem do HTML da página, não da captura. Também mede o realce de cada tela do story (realces.json) ----
+  ctx = await contexto(r, 'exemplo', null, 2, { width: 390, height: 844 }); p = await abrir(ctx, r);
+  const REALCE = { diario: 'Por horário, últimos 7 dias', xixi: 'Agora', senta: 'Passo a passo', kit: '.cal', plano: 'Deita, o começo' };
+  const realces = {};
+  const prontas = () => p.evaluate(() => Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))));
+  const raiz = async t => { await p.click('nav button[data-t="' + t + '"]'); await p.waitForTimeout(350); await p.evaluate(() => scrollTo(0, 0)); };
+  const tela = async (n, rolar) => { await prontas(); if (rolar) await p.evaluate(sel => { const e = document.querySelector(sel); if (e) scrollTo(0, e.getBoundingClientRect().top + scrollY - 16); }, rolar); await p.waitForTimeout(250); await p.screenshot({ path: f('tela-' + n + '.png') });
+    // realce: o cartão do rótulo (texto exato, sem diferença de caixa) ou do seletor, em % da tela, cortado acima da barra de baixo
+    if (REALCE[n]) realces[n] = await p.evaluate(alvo => {
+      let el = alvo.startsWith('.') ? document.querySelector(alvo) : [...document.querySelectorAll('h1,h2,h3,h4,p,span,strong,b,div,li,button')].find(e => [...e.children].every(c => c.tagName.toLowerCase() === 'svg') && e.textContent.trim().toLowerCase() === alvo.toLowerCase());
+      if (!el) return null;
+      const c = el.closest('.cartao, button, li') || el.parentElement; const b = c.getBoundingClientRect();
+      const nav = document.querySelector('nav.nav'); const fim = nav ? nav.getBoundingClientRect().top - 8 : innerHeight;
+      const m = 4, y0 = Math.max(4, b.top - m), y1 = Math.min(fim, b.bottom + m);
+      const pc = (v, t) => Math.round(v / t * 1000) / 10;
+      return { left: pc(Math.max(4, b.left - m), innerWidth), top: pc(y0, innerHeight), width: pc(Math.min(innerWidth - 4, b.right + m) - Math.max(4, b.left - m), innerWidth), height: pc(y1 - y0, innerHeight) };
+    }, REALCE[n]);
+  };
+  await tela('hoje');
+  await p.click('button[data-a="sessao"][data-d="5"]'); await p.waitForTimeout(500); await tela('sessao');
+  await raiz('hoje'); await p.click('button[data-t="plano"]'); await p.waitForTimeout(400); await tela('plano');
+  await raiz('diario'); await tela('diario');
+  await raiz('agora'); await tela('agora');
+  await p.click('.lin[data-id="xixi"]'); await p.waitForTimeout(400); await tela('xixi');
+  await raiz('comandos'); await tela('comandos');
+  await p.click('.cmd[data-id="senta"]'); await p.waitForTimeout(500); await tela('senta');
+  await raiz('hoje'); await p.click('button[data-t="raca"]'); await p.waitForTimeout(400); await tela('raca');
+  await raiz('hoje'); await p.click('button[data-t="kit"]'); await p.waitForTimeout(500); await tela('kit');
+  await raiz('hoje'); await p.click('button[data-t="familia"]'); await p.waitForTimeout(400); await tela('familia');
+  fs.writeFileSync(f('realces.json'), JSON.stringify(realces));
   await ctx.close();
   }
 
