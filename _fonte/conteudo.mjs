@@ -13,6 +13,13 @@ export const racas = {
       'Guia no peitoral, não na coleira.',
       'Descer do sofá pela rampa ou pelo colo.',
       'Latido de aviso: parar quando você agradece, não latido zero.'
+    ],
+    // depoimentos reais recebidos pelo Vini (2026-11-09), literais: nome e texto como chegaram, sem editar.
+    // [nome, texto, 'f' ou 'm'] para o descritor Tutora/Tutor de {R}
+    depoimentos: [
+      ['Camila', 'Gente meu lulu latia pra absolutamente tudo kkkk comecei a fazer os treininhos e já tô conseguindo controlar melhor isso. Ainda tem seus momentos de escândalo mas melhorou bastante 😂', 'f'],
+      ['Rafael de Souza Martins', 'Eu achava que ele era teimoso mesmo e não tinha jeito. O que mais gostei foi que explica tudo bem simples, sem precisar ficar horas treinando. Faço um pouquinho todo dia.', 'm'],
+      ['Juliana Ribeiro', 'Comprei meio desconfiada, mas gostei bastante. Aqui em casa o maior problema era ele não obedecer quando chamava. Não tá 100% ainda, mas já vem muito mais vezes.', 'f']
     ]
   },
   'shih-tzu': {
@@ -25,6 +32,13 @@ export const racas = {
       'Brinquedo comprido, nada de cabo de guerra perto do rosto.',
       'Guia no peitoral, não na coleira.',
       'Ficar sozinho treinado cedo, a partir do dia 8.'
+    ],
+    // depoimentos reais recebidos pelo Vini (2026-11-09), literais: nome e texto como chegaram, sem editar.
+    // [nome, texto, 'f' ou 'm'] para o descritor Tutora/Tutor de {R}
+    depoimentos: [
+      ['Fernanda Oliveira da Silva', 'O meu fazia xixi pela casa inteira, era um estresse todo dia. Comecei a seguir as orientações do app e finalmente estamos criando uma rotina. Ainda acontece um acidente ou outro, mas nem se compara.', 'f'],
+      ['Lucas Almeida', 'Achei bem prático, principalmente pra quem nunca adestrou cachorro. As explicações são fáceis e dá pra ir fazendo no tempo livre mesmo.', 'm'],
+      ['Patrícia', 'Minha shih tzu tem 2 aninhos e eu jurava que já era tarde pra ensinar certas coisas kkk. Fiquei surpresa com o quanto ela consegue aprender com um pouco de paciência.', 'f']
     ]
   },
   salsicha: {
@@ -37,6 +51,13 @@ export const racas = {
       'Senta normal, sem o "senta bonito".',
       'Ração da própria refeição como petisco do treino.',
       'Faro de caçador: trabalho para o nariz gasta energia sem pulo.'
+    ],
+    // depoimentos reais recebidos pelo Vini (2026-11-09), literais: nome e texto como chegaram, sem editar.
+    // [nome, texto, 'f' ou 'm'] para o descritor Tutora/Tutor de {R}
+    depoimentos: [
+      ['Mariana Costa', 'Quem tem salsicha sabe o quanto esses bichinhos são teimosos 😂 O meu fazia o que queria. Gostei que os exercícios são curtinhos, aí consigo fazer com ele todos os dias.', 'f'],
+      ['Bruno Henrique de Almeida Santos', 'Aqui o problema era passeio, ele puxava a guia sem parar. Ainda estamos treinando, mas já consigo sair com ele bem mais tranquilo. Pra mim já valeu.', 'm'],
+      ['Aline R.', 'Nunca tinha conseguido ensinar nem o básico pra minha cachorrinha. Com as orientações consegui fazer ela aprender o senta e agora estamos tentando o fica. Tô toda boba kkkkk', 'f']
     ]
   },
   yorkshire: {
@@ -49,6 +70,13 @@ export const racas = {
       'Descer do sofá pela rampa ou pelo colo.',
       'Latido de aviso: parar quando você agradece, não latido zero.',
       'Nos passeios, distância de outros cães até o treino estar firme.'
+    ],
+    // depoimentos reais recebidos pelo Vini (2026-11-09), literais: nome e texto como chegaram, sem editar.
+    // [nome, texto, 'f' ou 'm'] para o descritor Tutora/Tutor de {R}
+    depoimentos: [
+      ['Beatriz Santos de Oliveira', 'Meu yorkshire era o dono da casa kkkkk latia quando chegava visita, quando tocava campainha, por qualquer coisa. Tô seguindo os exercícios e já percebi uma diferença boa.', 'f'],
+      ['Gustavo Pereira', 'Gostei porque não é aquela coisa complicada que a gente vê na internet. É bem direto, mostra o que fazer e vou praticando com ela aos poucos.', 'm'],
+      ['Renata', 'Tenho dois yorks e cada um tem uma personalidade completamente diferente. Comecei treinando o mais agitado e já tô vendo progresso. O segredo aqui tá sendo ter paciência e repetir todo dia.', 'f']
     ]
   }
 };
@@ -136,6 +164,13 @@ export const texto = {
       'De bônus, o kit para imprimir, com o nome dele'
     ],
     legenda: 'O calendário dos 21 dias e os cartões dos comandos, prontos para a geladeira.'
+  },
+  // depoimentos (2026-11-09, Vini): entre o que vem e a oferta, a prova logo antes do preço. Estilo de depoimento de blog
+  // (cartão com aspas, texto, inicial, nome e Tutora/Tutor da raça); sem foto, curtidas, data, estrelas ou selo
+  prova: {
+    h2: 'O que tutores de {R} estão dizendo',
+    p: 'Mensagens que recebemos de quem já usa o app.',
+    tutor: { f: 'Tutora de {R}', m: 'Tutor de {R}' }
   },
   oferta: {
     h2: 'No Tapetinho por R$ 37, uma vez só',

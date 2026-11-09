@@ -125,6 +125,11 @@ ${sec('s-agora', `<h2>${t(T.agora.h2)}</h2><p>${t(T.agora.p)}</p>`,
  ${fig('kit', 'Kit para imprimir: o calendário dos 21 dias com o nome do cão', T.vem.legenda, 'largo')}
 </div></section>
 
+<section class="s-prova"><div class="wrap estreito">
+ <h2 class="centro">${t(T.prova.h2)}</h2><p class="centro prova-p">${t(T.prova.p)}</p>
+ <div class="depos">${r.depoimentos.map(([nome, txt, gen], k) => `<figure class="depo"><blockquote><p>${esc(txt)}</p></blockquote><figcaption><span class="av av${k % 3}" aria-hidden="true">${esc([...nome.trim()][0].toUpperCase())}</span><span class="quem"><b>${esc(nome)}</b><span>${t(T.prova.tutor[gen])}</span></span></figcaption></figure>`).join('\n ')}</div>
+</div></section>
+
 <section class="s-oferta" id="oferta"><div class="wrap tri caixa-oferta">
  <div class="ta"><h2>${t(T.oferta.h2)}</h2>
   <div class="preco-bloco"><p class="lancamento">${t(T.oferta.lancamento)}</p><p class="preco-linha">de <s><span class="sr">preço cheio </span>${t(T.oferta.de)}</s> <strong>${t(T.oferta.por)}</strong></p></div>
@@ -208,6 +213,7 @@ vs.forEach(function(v){io.observe(v);});})();
 </body>
 </html>
 `;
+  ok(Array.isArray(r.depoimentos) && r.depoimentos.length === 3 && r.depoimentos.every(d => d[2] === 'f' || d[2] === 'm'), 'depoimentos da raça ' + id);
   ok(!/\u2014/.test(html), 'travessão na página ' + id);
   ok(!/\{(R|C|oC|OC)\}/.test(html), 'marcador sobrando em ' + id);
   return html;
